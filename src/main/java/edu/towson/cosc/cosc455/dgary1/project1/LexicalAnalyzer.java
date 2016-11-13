@@ -1,4 +1,4 @@
-package edu.towson.cosc.cosc455.dgary1.lab4;
+package edu.towson.cosc.cosc455.dgary1.project1;
 
 /*
 COSC 455 Programming Languages: Implementation and Design

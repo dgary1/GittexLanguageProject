@@ -1,4 +1,4 @@
-package edu.towson.cosc.cosc455.dgary1.lab4
+package edu.towson.cosc.cosc455.dgary1.project1
 
 
 class SyntaxAnalyzer {
