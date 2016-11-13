@@ -1,5 +1,72 @@
-<lolspeak> 	    ::=	<noun_phrase> <verb> <noun_phrase>
-<noun_phrase>	::=	<article> <noun>
-<verb>	 	    ::=	lovez  |  hatez  | ates
-<noun>	 	    ::=	dawg  |  kat  |  rat
-<article>	    ::=	a  | teh
+DOCB : String = "\\BEGIN"
+DOCE : String = "\\END"
+TITTLEB : String = "\\TITLE["
+BRACKETE : String = "]"
+HEADING : String = '#'
+PARAB : String = "\\PARAB"
+PARAE : String = "\\PARAE"
+BOLD : String = "**"
+ITALICS : String = "*"
+LISTITEM : String = "+"
+NEWLINE : String = "\\\\"
+LINKB : String = "["
+ADDRESSB : String = "("
+ADDRESSE : String = ")"
+IMAGEB : String = "!["
+DEFB : String = "\\DEF["
+EQSIGN : String = "="
+USEB  "\\USE["
+REQTEXT ::= 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J'
+          | 'K' | 'L' | 'M' | 'N' | 'O' | 'P' | 'Q' | 'R' | 'S' | 'T'
+          | 'U' | 'V' | 'W' | 'X' | 'Y' | 'Z' | 'a' | 'b' | 'c' | 'd'
+          | 'e' | 'f' | 'g' | 'h' | 'i' | 'j' | 'k' | 'l' | 'm' | 'n'
+          | 'o' | 'p' | 'q' | 'r' | 's' | 't' | 'u' | 'v' | 'w' | 'x'
+          | 'y' | 'z' | '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7'
+          | '8' | '9' | ',' | '.' | ''' | ':' | '?' | '_' | '/'
+TEXT ::= 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J'
+       | 'K' | 'L' | 'M' | 'N' | 'O' | 'P' | 'Q' | 'R' | 'S' | 'T'
+       | 'U' | 'V' | 'W' | 'X' | 'Y' | 'Z' | 'a' | 'b' | 'c' | 'd'
+       | 'e' | 'f' | 'g' | 'h' | 'i' | 'j' | 'k' | 'l' | 'm' | 'n'
+       | 'o' | 'p' | 'q' | 'r' | 's' | 't' | 'u' | 'v' | 'w' | 'x'
+       | 'y' | 'z' | '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7'
+       | '8' | '9' | ',' | '.' | ''' | ':' | '?' | '_' | '/' |  ε
+<gittex> ::= DOCB<variable-define><title><body>DOCE
+<title> ::= TITLEB REQTEXT BRACKETE
+<body> ::= <inner-text><body>
+         | <paragraph><body>
+         | <newline><body>
+         | ε
+<paragraph> ::= PARAB <variable-define><inner-text> PARAE
+<inner-text> := <variable-use><inner-text>
+               | <heading><inner-text>
+               | <bold><inner-text>
+               | <italics><inner-text>
+               | <listitem><inner-text>
+               | <image><inner-text>
+               | <link><inner-text>
+               | TEXT <inner-text>
+               | ε
+<heading> ::= HEADING REQTEXT
+             | ε
+<variable-define> ::= DEFB REQTEXT EQSIGN REQTEXT BRACKETE <variable-define>
+                      | ε
+<variable-use> ::= USEB REWTEXT BRACKETE
+                  | ε
+<bold> ::= BOLD TEXT BOLD
+         | ε
+<italics> ::= ITALICS TEXT ITALICS
+            | ε
+<listitem> ::= LISTITEMB <inner-item><listitem>
+            | ε
+<inner-item> ::= <variable-use><inner-item>
+              | <bold><inner-item>
+              | <italics><inner-item>
+              | <link><inner-item>
+              | REQTEXT <inner-item>
+              | ε
+<link> ::= LINKB REQTEXT BRACKETE ADDRESSB REQTEXT ADDRESSE
+         | ε
+<image> ::= IMAGEB REQTEXT BRACKETE ADDRESSB REQTEXT ADDRESSE
+         | ε
+<newline> ::= NEWLINE
+           | ε

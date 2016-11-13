@@ -1,7 +1,7 @@
 package edu.towson.cosc.cosc455.dgary1.project1
 
 
-trait SyntaxAnalyzer {
+class MySyntaxAnalyzer extends SyntaxAnalyzer {
   def gittex() : Unit
   def title() : Unit
   def body() : Unit
