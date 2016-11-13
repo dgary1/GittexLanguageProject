@@ -1,0 +1,5 @@
+<lolspeak> 	    ::=	<noun_phrase> <verb> <noun_phrase>
+<noun_phrase>	::=	<article> <noun>
+<verb>	 	    ::=	lovez  |  hatez  | ates
+<noun>	 	    ::=	dawg  |  kat  |  rat
+<article>	    ::=	a  | teh
