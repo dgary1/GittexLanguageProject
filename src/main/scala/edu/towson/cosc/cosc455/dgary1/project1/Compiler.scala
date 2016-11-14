@@ -19,9 +19,8 @@ object Compiler {
     // get first Token
     Scanner.getNextToken()
     Parser.gittex()
-
     //calls start state of BNF is SyntaxAnalyzer
-    Parser.gittex()
+    Eval.parse()
   }
 
   def readFile(file : String) = {
