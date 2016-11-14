@@ -57,6 +57,7 @@
       <element id="extracted-dir" path="$USER_HOME$/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.8/testing-0.13.8.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.8/tracking-0.13.8.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.8/xsbti/interface-0.13.8.jar" path-in-jar="/" />
+      <element id="directory" name="GittexLangJarFile" />
     </root>
   </artifact>
 </component>
