@@ -46,7 +46,15 @@ class MySyntaxAnalyzer extends SyntaxAnalyzer {
       System.exit(1)
     }
   }
-  def body() : Unit
+  def body() : Unit = {
+    innerText()
+    paragraph()
+    newline()
+    while(!Compiler.currentToken.equalsIgnoreCase(CONSTANTS.DOCE)) {
+      Compiler.Scanner.getNextToken()
+      body()
+    }
+  }
 
   override def paragraph() : Unit = {
     if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.PARAB)) {
@@ -83,8 +91,15 @@ class MySyntaxAnalyzer extends SyntaxAnalyzer {
         innerText()
       case CONSTANTS.NEWLINE => newline()
         innerText()
-      case _ =>
-        // text here
+      case _ => {
+        if(truth) {
+          parsableTree.push(Compiler.currentToken)
+          Compiler.Scanner.getNextToken()
+        } else {
+          println("Syntax Error: Text required.")
+          System.exit(1)
+        }
+      }
     }
   }
   override def heading() : Unit = {
@@ -263,7 +278,12 @@ class MySyntaxAnalyzer extends SyntaxAnalyzer {
       System.exit(1)
     }
   }
-  def newline() : Unit
+  def newline() : Unit = {
+    if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.NEWLINE)) {
+      parsableTree.push(Compiler.currentToken)
+      Compiler.Scanner.getNextToken()
+    }
+  }
   def text() : Unit = {
     while (!truth) {
       parsableTree.push(Compiler.currentToken)
