@@ -1,15 +1,14 @@
 package edu.towson.cosc.cosc455.dgary1.project1
 
 import java.awt.Desktop
-import java.io.{File, IOException}
-
+import java.io.{File, IOException, PrintWriter}
 import scala.collection.mutable
 
 class MySemanticAnalyzer {
-  var beginningTree : List[String] = Nil
-  var endTree : List[String] = Nil
-  var index = 0
-
+  // In order to convert the Stack of Strings I have created throughout the SyntaxAnalyzer, I must be able to reverse that stack and then,
+  // pop each of the top elements and convert them accordingly depending on what grammar rule they fit. In order to do that, I think that using
+  // a pattern matching approach. Ex: case CONSTANTS.DOCB => parsableTree = "<!DOCTYPE html>\n<html>\n<head>\n" :: parsableTree;
+  // current = resTree.pop(); where parsableTree would be the tree that would be converted into
   def parse() : Unit = {
 
   }

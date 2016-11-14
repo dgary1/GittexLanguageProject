@@ -1,5 +1,6 @@
 package edu.towson.cosc.cosc455.dgary1.project1
 
+import scala.collection.mutable
 
 class MySyntaxAnalyzer extends SyntaxAnalyzer {
   var parsableTree = new scala.collection.mutable.Stack[String]
@@ -34,6 +35,7 @@ class MySyntaxAnalyzer extends SyntaxAnalyzer {
     if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.TITLEB)) {
       parsableTree.push(CONSTANTS.TITLEB)
       Compiler.Scanner.getNextToken()
+      // checking to see if the bracket is there, if not => will result in syntax error prompt
       if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.BRACKETE)) {
         parsableTree.push(CONSTANTS.BRACKETE)
         Compiler.Scanner.getNextToken()
@@ -50,12 +52,12 @@ class MySyntaxAnalyzer extends SyntaxAnalyzer {
     innerText()
     paragraph()
     newline()
+    // this will loop back to body and in NewLine it has an DOCE where it has the possibility to stop that loop
     while(!Compiler.currentToken.equalsIgnoreCase(CONSTANTS.DOCE)) {
       Compiler.Scanner.getNextToken()
       body()
     }
   }
-
   override def paragraph() : Unit = {
     if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.PARAB)) {
       parsableTree.push(CONSTANTS.PARAB)
@@ -64,6 +66,7 @@ class MySyntaxAnalyzer extends SyntaxAnalyzer {
       Compiler.Scanner.getNextToken()
       if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.PARAE)) {
         parsableTree.push(Compiler.currentToken)
+        Compiler.Scanner.getNextToken()
       } else {
         println("Syntax Error: The ending tag for paragraph is not present.")
         System.exit(1)
@@ -74,6 +77,7 @@ class MySyntaxAnalyzer extends SyntaxAnalyzer {
     }
   }
   override def innerText() : Unit = {
+    // pattern matching the current token to go to the next possibility given that there are multiple possible paths
     Compiler.currentToken match {
       case CONSTANTS.USEB => variableUse()
         innerText()
@@ -91,6 +95,7 @@ class MySyntaxAnalyzer extends SyntaxAnalyzer {
         innerText()
       case CONSTANTS.NEWLINE => newline()
         innerText()
+      // text
       case _ => {
         if(truth) {
           parsableTree.push(Compiler.currentToken)
@@ -108,6 +113,7 @@ class MySyntaxAnalyzer extends SyntaxAnalyzer {
       Compiler.Scanner.getNextToken()
     } else {
       println("Syntax Error: Heading tag is not present")
+      System.exit(1)
     }
   }
   override def variableDefine() : Unit = {

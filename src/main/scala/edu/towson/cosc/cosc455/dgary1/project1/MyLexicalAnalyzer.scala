@@ -1,9 +1,7 @@
 package edu.towson.cosc.cosc455.dgary1.project1
 
 import scala.collection.immutable
-/**
-  * Created by davidgary on 11/13/16.
-  */
+
 class MyLexicalAnalyzer extends LexicalAnalyzer {
   var truth : Boolean = true
   val lexemes : List[String] = List("\\BEGIN", "\\END", "\\TITLE[", "\\USE[", "\\DEF[", "\\PARE", "\\PARB", "]", "#", "*", "**", "+", "\\", "[", "(", ")", "![", "=")
