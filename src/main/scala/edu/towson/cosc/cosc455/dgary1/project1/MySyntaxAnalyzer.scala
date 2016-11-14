@@ -6,7 +6,7 @@ class MySyntaxAnalyzer extends SyntaxAnalyzer {
   var parsableTree = new scala.collection.mutable.Stack[String]
   var truth : Boolean = false
 
-  def gittex() : Unit = {
+  override def gittex() : Unit = {
     // first, we are checking to see if the DOCB tag is present in the test case
     if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.DOCB)) {
       // pushing the tag into the Stack
@@ -19,7 +19,7 @@ class MySyntaxAnalyzer extends SyntaxAnalyzer {
       // checks for the ending tag of the test case
       if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.DOCE)) {
         parsableTree.push(Compiler.currentToken)
-        if (Compiler.fileContents.length - Compiler.position > 15) {
+        if (Compiler.fileContents.length - Compiler.index > 15) {
           println("Syntax Error: Nothing after the \\END")
           System.exit(1)
         }
@@ -30,7 +30,7 @@ class MySyntaxAnalyzer extends SyntaxAnalyzer {
     }
     // Syntax error is thrown if the Compiler cannot find the beginning tag of the test case
   }
-  def title() : Unit = {
+  override def title() : Unit = {
     // Compiler checks to see if the beginning tag of Title is present
     if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.TITLEB)) {
       parsableTree.push(CONSTANTS.TITLEB)
@@ -48,7 +48,7 @@ class MySyntaxAnalyzer extends SyntaxAnalyzer {
       System.exit(1)
     }
   }
-  def body() : Unit = {
+  override def body() : Unit = {
     innerText()
     paragraph()
     newline()
@@ -139,7 +139,7 @@ class MySyntaxAnalyzer extends SyntaxAnalyzer {
       System.exit(1)
     }
   }
-  def variableUse() : Unit = {
+  override def variableUse() : Unit = {
     if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.USEB)) {
       parsableTree.push(Compiler.currentToken)
       Compiler.Scanner.getNextToken()
@@ -164,7 +164,7 @@ class MySyntaxAnalyzer extends SyntaxAnalyzer {
       System.exit(1)
     }
   }
-  def italics() : Unit = {
+  override def italics() : Unit = {
     if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.ITALICS)) {
       parsableTree.push(Compiler.currentToken)
       Compiler.Scanner.getNextToken()
@@ -173,11 +173,12 @@ class MySyntaxAnalyzer extends SyntaxAnalyzer {
       System.exit(1)
     }
   }
-  def listItem() : Unit = {
+  override def listItem() : Unit = {
     if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.LISTITEM)) {
       parsableTree.push(Compiler.currentToken)
       Compiler.Scanner.getNextToken()
       innerItem()
+      // recursive call
       listItem()
     } else {
       println("Syntax Error: Missing tag is not present for the list.")
@@ -194,6 +195,7 @@ class MySyntaxAnalyzer extends SyntaxAnalyzer {
         innerItem()
       case CONSTANTS.LINKB => link()
         innerItem()
+      // case of reqtext/text
       case _ => {
         if (truth) {
           text()
@@ -202,27 +204,32 @@ class MySyntaxAnalyzer extends SyntaxAnalyzer {
       }
     }
   }
-  def link() : Unit = {
+  override def link() : Unit = {
+    // checks beginning tag of link
     if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.LINKB)) {
       parsableTree.push(Compiler.currentToken)
       Compiler.Scanner.getNextToken()
+      // after initial tag, looks for text
       if (truth) {
         parsableTree.push(Compiler.currentToken)
         Compiler.Scanner.getNextToken()
       }
+      // after next token, checks to see if bracket is there for the link
       if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.BRACKETE)) {
         parsableTree.push(Compiler.currentToken)
         Compiler.Scanner.getNextToken()
+        // next, checks for beginning address tag
         if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.ADDRESSB)) {
           parsableTree.push(Compiler.currentToken)
           Compiler.Scanner.getNextToken()
+          // again, looks for text
           if(truth) {
             parsableTree.push(Compiler.currentToken)
             Compiler.Scanner.getNextToken()
           } else {
             println("Syntax Error: Text required.")
             System.exit(1)
-          }
+          }// to end, looks for ending tag to finish analzying token
           if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.ADDRESSE)) {
             parsableTree.push(Compiler.currentToken)
             Compiler.Scanner.getNextToken()
@@ -242,7 +249,7 @@ class MySyntaxAnalyzer extends SyntaxAnalyzer {
       println("Syntax Error: Beginning tag of Link not present.")
     }
   }
-  def image() : Unit = {
+  override def image() : Unit = {
     if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.IMAGEB)) {
       parsableTree.push(Compiler.currentToken)
       Compiler.Scanner.getNextToken()
@@ -284,7 +291,7 @@ class MySyntaxAnalyzer extends SyntaxAnalyzer {
       System.exit(1)
     }
   }
-  def newline() : Unit = {
+  override def newline() : Unit = {
     if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.NEWLINE)) {
       parsableTree.push(Compiler.currentToken)
       Compiler.Scanner.getNextToken()

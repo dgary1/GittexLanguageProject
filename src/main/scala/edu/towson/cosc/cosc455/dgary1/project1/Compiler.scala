@@ -9,7 +9,7 @@ object Compiler {
   val Scanner = new MyLexicalAnalyzer
   val Parser = new MySyntaxAnalyzer
   val Eval = new MySemanticAnalyzer
-  var position: Int = 0
+  var index: Int = 0
 
   def main(args : Array[String]) = {
     // check usage

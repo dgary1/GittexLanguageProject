@@ -8,7 +8,7 @@ class MySemanticAnalyzer {
   // In order to convert the Stack of Strings I have created throughout the SyntaxAnalyzer, I must be able to reverse that stack and then,
   // pop each of the top elements and convert them accordingly depending on what grammar rule they fit. In order to do that, I think that using
   // a pattern matching approach. Ex: case CONSTANTS.DOCB => parsableTree = "<!DOCTYPE html>\n<html>\n<head>\n" :: parsableTree;
-  // current = resTree.pop(); where parsableTree would be the tree that would be converted into
+  // current = resTree.pop(); where parsableTree would be the tree that would be converted into a string file that would be executed to open in a browser
   def parse() : Unit = {
 
   }

@@ -7,7 +7,7 @@ class MyLexicalAnalyzer extends LexicalAnalyzer {
   val lexemes : List[String] = List("\\BEGIN", "\\END", "\\TITLE[", "\\USE[", "\\DEF[", "\\PARE", "\\PARB", "]", "#", "*", "**", "+", "\\", "[", "(", ")", "![", "=")
   var character : Char = ' '
   var stringofChar : String = ""
-  val position = -1
+  val index = -1
   // using a mutable queue because we want to add, remove, or change the elements of the queue
   var token = new scala.collection.mutable.Queue[Char]
 
@@ -15,8 +15,8 @@ class MyLexicalAnalyzer extends LexicalAnalyzer {
     stringofChar = stringofChar + character
   }
   def getChar() : Char = {
-    Compiler.fileContents.charAt(Compiler.position)
-    Compiler.position = Compiler.position + 1
+    Compiler.fileContents.charAt(Compiler.index)
+    Compiler.index = Compiler.index + 1
   }
   override def getNextToken() : Unit = {
     character = getChar()
@@ -50,6 +50,7 @@ class MyLexicalAnalyzer extends LexicalAnalyzer {
         println("Lexical Error: Token does not exist.")
         System.exit(1)
       }
+      // checks to see if the token is still accepting text instead of hitting the special character
     } else if (text()) {
         while (text()) {
           Compiler.Parser.truth = true

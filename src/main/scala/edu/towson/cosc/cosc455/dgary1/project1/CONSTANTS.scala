@@ -8,7 +8,7 @@ object CONSTANTS {
   val DOCE : String = "\\END"
   val TITLEB : String = "\\TITLE["
   val BRACKETE : String = "]"
-  val HEADING : String = '#'
+  val HEADING : String = "#"
   val PARAB : String = "\\PARAB"
   val PARAE : String = "\\PARAE"
   val BOLD : String = "**"
