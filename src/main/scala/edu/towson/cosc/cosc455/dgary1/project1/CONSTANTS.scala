@@ -6,7 +6,7 @@ package edu.towson.cosc.cosc455.dgary1.project1
 object CONSTANTS {
   val DOCB : String = "\\BEGIN"
   val DOCE : String = "\\END"
-  val TITTLEB : String = "\\TITLE["
+  val TITLEB : String = "\\TITLE["
   val BRACKETE : String = "]"
   val HEADING : String = '#'
   val PARAB : String = "\\PARAB"
